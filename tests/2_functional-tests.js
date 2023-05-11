@@ -23,18 +23,19 @@ suite('Functional Tests', function() {
   * ----[EXAMPLE TEST]----
   * Each test should completely test the response of the API end-point including response status code!
   */
-  test('#example Test GET /api/books', function(done){
-     chai.request(server)
-      .get('/api/books')
-      .end(function(err, res){
-        assert.equal(res.status, 200);
-        assert.isArray(res.body, 'response should be an array');
-        assert.property(res.body[0], 'commentcount', 'Books in array should contain commentcount');
-        assert.property(res.body[0], 'title', 'Books in array should contain title');
-        assert.property(res.body[0], '_id', 'Books in array should contain _id');
-        done();
-      });
-  });
+  // test('#example Test GET /api/books', function(done){
+  //    chai.request(server)
+  //     .keepOpen()
+  //     .get('/api/books')
+  //     .end(function(err, res){
+  //       assert.equal(res.status, 200);
+  //       assert.isArray(res.body, 'response should be an array');
+  //       assert.property(res.body[0], 'commentcount', 'Books in array should contain commentcount');
+  //       assert.property(res.body[0], 'title', 'Books in array should contain title');
+  //       assert.property(res.body[0], '_id', 'Books in array should contain _id');
+  //       done();
+  //     });
+  // });
   /*
   * ----[END of EXAMPLE TEST]----
   */
@@ -50,6 +51,7 @@ suite('Functional Tests', function() {
         };
 
         chai.request(server)
+          .keepOpen()
           .post(URL)
           .send(bookData)
           .end((err, res) => {
@@ -78,6 +80,7 @@ suite('Functional Tests', function() {
       
       test('Test GET /api/books',  function(done){
         chai.request(server)
+          .keepOpen()
           .get(URL)
           .end((err, res) => {
             assert.equal(res.status, 200);
@@ -98,6 +101,7 @@ suite('Functional Tests', function() {
       test('Test GET /api/books/[id] with id not in db',  function(done){
         let invalidId = '645d4307cb3a7fd3347f2a3a';
         chai.request(server)
+          .keepOpen()
           .get(`${URL}/${invalidId}`)
           .end((err, res) => {
             assert.equal(res.status, 200);
@@ -108,6 +112,7 @@ suite('Functional Tests', function() {
       
       test('Test GET /api/books/[id] with valid id in db',  function(done){
         chai.request(server)
+          .keepOpen()
           .get(`${URL}/${_id}`)
           .end((err, res) => {
             assert.equal(res.status, 200);
@@ -126,6 +131,7 @@ suite('Functional Tests', function() {
       
       test('Test POST /api/books/[id] with comment', function(done){
         chai.request(server)
+          .keepOpen()
           .post(`${URL}/${_id}`)
           .send({
             comment: 'test comment'
@@ -141,6 +147,7 @@ suite('Functional Tests', function() {
 
       test('Test POST /api/books/[id] without comment field', function(done){
         chai.request(server)
+          .keepOpen()
           .post(`${URL}/${_id}`)
           .end((err, res) => {
             assert.equal(res.status, 200);
@@ -152,6 +159,7 @@ suite('Functional Tests', function() {
       test('Test POST /api/books/[id] with comment, id not in db', function(done){
         let invalidId = '645d4307cb3a7fd3347f2a3a';
         chai.request(server)
+          .keepOpen()
           .post(`${URL}/${invalidId}`)
           .send({
             comment: 'test comment'
@@ -169,6 +177,7 @@ suite('Functional Tests', function() {
 
       test('Test DELETE /api/books/[id] with valid id in db', function(done){
         chai.request(server)
+          .keepOpen()
           .delete(`${URL}/${_id}`)
           .end((err, res) => {
             assert.equal(res.status, 200);
@@ -180,6 +189,7 @@ suite('Functional Tests', function() {
       test('Test DELETE /api/books/[id] with id not in db', function(done){
         let invalidId = '645d4307cb3a7fd3347f2a3a';
         chai.request(server)
+          .keepOpen()
           .delete(`${URL}/${invalidId}`)
           .end((err, res) => {
             assert.equal(res.status, 200);
