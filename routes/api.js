@@ -4,34 +4,23 @@ const router = express.Router();
 const bookController = require('../controllers/bookController.js');
 
 
-
-router.get('/', (req, res) => {
-  //response will be array of book objects
-  //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-});
+//response will be array of book objects
+//json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
+router.get('/', bookController.get_books);
 
 //response will contain new book object including atleast _id and title
 router.post('/', bookController.add_book);
 
-router.delete('/', (req, res) => {
-  //if successful response will be 'complete delete successful'
-});
+//if successful response will be 'complete delete successful'
+router.delete('/', bookController.delete_book);
 
+//json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
+router.get('/:_id', bookController.get_books);
 
-router.get('/', (req, res) => {
-  let bookid = req.params.id;
-  //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
-});
+//json res format same as .get
+router.post('/:_id', bookController.add_comment);
 
-router.post('/:id', (req, res) => {
-  let bookid = req.params.id;
-  let comment = req.body.comment;
-  //json res format same as .get
-});
-
-router.delete('/:id', (req, res) => {
-  let bookid = req.params.id;
-  //if successful response will be 'delete successful'
-});;
+//if successful response will be 'delete successful'
+router.delete('/:_id', bookController.delete_book);
 
 module.exports = router;
